@@ -4,9 +4,7 @@ import Result from '../components/madlib/Result';
 
 export default class Madlib extends Component{
   state = {
-    showResult: false,
-    wordsArray: [],
-    firstWord: '',
+    showResult: false
   }
 
   toggleResult = () =>
@@ -14,22 +12,17 @@ export default class Madlib extends Component{
 
   handleSubmit = event => {
     event.preventDefault();
-    // const entries = [...event.target].map(entry => entry.value);
+    const entries = [...event.target].map(entry => entry.value);
+    this.setState({ words: entries });
     this.toggleResult();
-    this.setState(state => ({ wordsArray: [state.firstWord] }));
-    
-  }
-
-  handleChange = event => {
-    this.setState({ firstWord: event.target.value });
   }
 
   render() {
     const { showResult } = this.state;
     return (
       <>
-        {!showResult && <Form onSubmit={this.handleSubmit} onChange={this.handleChange} />}
-        {showResult && <Result words={this.state.wordsArray} closeResult={this.toggleResult} />}
+        {!showResult && <Form onSubmit={this.handleSubmit} />}
+        {showResult && <Result words={this.state.words} closeResult={this.toggleResult} />}
       </>
     );
   }
